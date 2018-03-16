@@ -22,8 +22,8 @@ class zabbix_agent_corosync (
   }
 
   exec {'zabbix haclient membership':
-    unless  => "grep -q 'hacluster\\S*zabbix' /etc/group",
-    command => 'usermod -aG hacluster zabbix',
+    unless  => "/bin/grep -q 'hacluster\\S*zabbix' /etc/group",
+    command => '/sbin/usermod -aG hacluster zabbix',
     notify  => Service['zabbix-agent'],
   }
 }
