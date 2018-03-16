@@ -21,9 +21,8 @@ class zabbix_agent_corosync (
     mode   => '0775',
   }
 
-  exec {'zabbix haclient membership':
-    unless  => "/bin/grep -q 'hacluster\\S*zabbix' /etc/group",
-    command => '/usr/sbin/usermod -aG hacluster zabbix',
-    notify  => Service['zabbix-agent'],
+  sudo::conf { 'zabbix-corosync':
+    priority => 10,
+    content  => "%zabbix ALL=(ALL) NOPASSWD: ${bin_path}/crm_mon_stats.sh",
   }
 }
